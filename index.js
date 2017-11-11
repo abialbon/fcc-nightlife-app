@@ -6,7 +6,6 @@ const session           = require('express-session');
 const mongoose          = require('mongoose');
 const User              = require('./models/user');
 const TwitterStrategy   = require('./middleware/twitter-strategy');
-const twitterAuthRoutes = require('./routes/auth');
 const MongoStore        = require('connect-mongo')(session);
 
 // Database connection
@@ -59,7 +58,10 @@ app.use(passport.session());
 passport.use(TwitterStrategy);
 
 // Routes setup
+const apiRoutes = require('./routes/api');
+const twitterAuthRoutes = require('./routes/auth');
 app.get('/', (req, res) => { res.render('index', { user: req.user }) });
+app.use('/api', apiRoutes);
 app.use('/auth/twitter', twitterAuthRoutes);
 
 app.listen(3000, () => {

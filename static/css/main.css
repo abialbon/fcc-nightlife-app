@@ -5,3 +5,19 @@
 h3 i {
     margin-right: 10px;
 }
+
+.card-footer-item {
+    cursor: pointer;
+}
+
+#card-area {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    width: 30%;
+    margin: 20px auto;
+    height: 100%;
+}

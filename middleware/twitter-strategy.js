@@ -8,9 +8,6 @@ module.exports = new TwitterStrategy({
         callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
     },
     function(token, tokenSecret, profile, cb) {
-        console.log(token);
-        console.log(tokenSecret);
-        console.log(Object.keys(profile));
         User.findOne({ twitterId: profile.id })
             .then(user => {
                 if (!user) {
