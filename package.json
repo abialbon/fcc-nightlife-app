@@ -21,6 +21,12 @@
   },
   "homepage": "https://github.com/abialbon/fcc-nightlife-app#readme",
   "dependencies": {
-    "express": "^4.16.2"
+    "connect-mongo": "^2.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mongoose": "^4.13.1",
+    "passport": "^0.4.0",
+    "passport-twitter": "^1.0.4"
   }
 }
