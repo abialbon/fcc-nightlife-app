@@ -42,7 +42,7 @@ $(function() {
         cardArea.html('');
         requestInProgress = true;
         spinner.css('display', 'block');
-        var URL = 'http://127.0.0.1:3000/api/search/' + query;
+        var URL = 'https://nightlybars.herokuapp.com/api/search/' + query;
         $.ajax({
             type: "POST",
             url: URL,
@@ -89,7 +89,7 @@ $(function() {
         $('.go').on('click', function() {
             var id = $(this).attr('data-toggle');
             var toggles = $('[data-toggle="' + id +'"]');
-            $.post('http://127.0.0.1:3000/api/toggle/' + id, { search: searchTerm }, function(res) {
+            $.post('https://nightlybars.herokuapp.com/api/toggle/' + id, { search: searchTerm }, function(res) {
                 console.log(res);
                 if (res.error) {
                     window.location = 'auth/twitter';

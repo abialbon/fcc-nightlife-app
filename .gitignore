@@ -3,3 +3,4 @@
 .vscode/
 *.xml
 node_modules
+.env

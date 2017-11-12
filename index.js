@@ -31,9 +31,6 @@ if (process.env.ENVIRONMENT && process.env.ENVIRONMENT === 'dev') {
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        store: new MongoStore({
-            mongooseConnection: mongoose.connection
-        })
     }));
 } else {
     app.use(session({
@@ -72,6 +69,6 @@ app.get('/', (req, res) => {
 app.use('/api', apiRoutes);
 app.use('/auth/twitter', twitterAuthRoutes);
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
     console.log('The server has started!');
 });
