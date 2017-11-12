@@ -10,8 +10,7 @@ router.get('/fail', (req, res) => {
 router.get('/callback', passport.authenticate('twitter', {
     failureRedirect: '/auth/twitter/fail'
 }), (req, res) => {
-    // TODO: Refer the user back to the starting page
-    res.send('You have been authenticated');
+    res.redirect('/');
 });
 
 module.exports = router;

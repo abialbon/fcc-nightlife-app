@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/bulma.css">
     <link rel="stylesheet" href="/css/main.css">
+    <script>
+        <% if (user._id) { %>
+            window.pass = true
+            window.userSearch = '<%- user.recentSearch  %>';
+        <% } %>
+    </script>
 </head>
 <body>
     <!--------- Hero ------------------------------------------>
@@ -43,8 +49,8 @@
 
     <!--------- Card Area ------------------------------------->
     <section>
+        <img id="spinner" src="/assets/spinner.svg" alt="Spinner">
         <div id="card-area" class="container">
-
         </div>
     </section>
 

@@ -2,8 +2,16 @@ const express   = require('express');
 const router    = express.Router();
 const request   = require('superagent');
 const Business  = require('../models/business');
+const User      = require('../models/user');
 
 router.post('/search/:searchTerm', (req, res) => {
+
+    // If authenticated, save the user's recent search term
+    if (req.isAuthenticated()) {
+        User.findByIdAndUpdate(req.user._id, { recentSearch: req.body.search })
+            .then(() => null);
+    }
+
     // Search the yelp API and get the results
     const yelpAPIUrl = `https://api.yelp.com/v3/businesses/search?term=bars&location=${req.params.searchTerm}&sort_by=rating&radius=4000&limit=15`;
     request
@@ -12,7 +20,7 @@ router.post('/search/:searchTerm', (req, res) => {
         .end((err, data) => {
             if (err) {
                 // TODO: Handle the error
-                console.log(err.message);
+                res.send({ error: true })
                 return;
             }
             // List of all businesses returned by the YELP API
@@ -62,7 +70,7 @@ router.post('/search/:searchTerm', (req, res) => {
 });
 
 router.post('/toggle/:businessID', (req, res) => {
-    // Check if the user is authenticated
+    // Check if !authenticated, on error make the client redirect to auth/twitter
     if (!req.isAuthenticated()) {
         res.send({ error: true });
         return;
@@ -73,12 +81,12 @@ router.post('/toggle/:businessID', (req, res) => {
             if (business.users.indexOf(req.user._id) === -1) {
                 Business.findOneAndUpdate({ business_id: req.params.businessID },
                     { $push: {users: req.user._id} })
-                    .then((oldvalue) => res.send({ newValue: oldvalue.users.length + 1 }))
+                    .then((oldvalue) => res.send({ newValue: oldvalue.users.length + 1, added: true }))
                     .catch(e => console.log(e.message));
             } else {
                 Business.findOneAndUpdate({ business_id: req.params.businessID },
                     { $pull: {users: req.user._id} })
-                    .then((oldvalue) => res.send({ newValue: oldvalue.users.length - 1 }))
+                    .then((oldvalue) => res.send({ newValue: oldvalue.users.length - 1, added: false }))
                     .catch(e => console.log(e.message));
             }
         })

@@ -1,6 +1,7 @@
 const express           = require('express');
 const app               = express();
 const path              = require('path');
+const bodyParser        = require('body-parser');
 const passport          = require('passport');
 const session           = require('express-session');
 const mongoose          = require('mongoose');
@@ -21,6 +22,7 @@ mongoose.connection
 
 // App configuration
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'static')));
 
 // Session configuration
@@ -60,7 +62,13 @@ passport.use(TwitterStrategy);
 // Routes setup
 const apiRoutes = require('./routes/api');
 const twitterAuthRoutes = require('./routes/auth');
-app.get('/', (req, res) => { res.render('index', { user: req.user }) });
+app.get('/', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.render('index', { user: req.user })
+    } else {
+        res.render('index', { user: {} })
+    }
+});
 app.use('/api', apiRoutes);
 app.use('/auth/twitter', twitterAuthRoutes);
 

@@ -13,11 +13,39 @@ h3 i {
 #card-area {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+}
+
+#spinner {
+    display: none;
+    position: absolute;
+    left: calc(50% - 22px);
+    margin-top: 100px;
+}
+
+section {
+    background-color: #2a2a2a;
+    min-height: 500px;
 }
 
 .card {
     width: 30%;
-    margin: 20px auto;
+    margin: 20px 10px;
     height: 100%;
 }
+
+@media (max-width: 900px) {
+    .card {
+        width: 45%;
+    }
+}
+
+@media (max-width: 600px) {
+    .card {
+        width: 90%;
+    }
+}
+
+
